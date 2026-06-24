@@ -41,9 +41,10 @@ export const getReimbursementsController = asyncHandler(async (req, res) => {
 	logger.info('getReimbursementsController entry');
 	try {
 		const reimbursements = await getReimbursements(req.user);
-		res.status(200).json(
-			new ApiSuccessResponse('Reimbursements fetched successfully', { reimbursements })
-		);
+		res.status(200).json({
+			status: 'success',
+			data: { reimbursements },
+		});
 	} catch (error) {
 		logger.error(`getReimbursementsController error: ${error?.message || error}`);
 		throw error;
@@ -56,9 +57,10 @@ export const getReimbursementsByUserIdController = asyncHandler(async (req, res)
 	logger.info('getReimbursementsByUserIdController entry');
 	try {
 		const reimbursements = await getReimbursementsByUserId(req.params.userId, req.user);
-		res.status(200).json(
-			new ApiSuccessResponse('Reimbursements fetched successfully', { reimbursements })
-		);
+		res.status(200).json({
+			status: 'success',
+			data: { reimbursements },
+		});
 	} catch (error) {
 		logger.error(`getReimbursementsByUserIdController error: ${error?.message || error}`);
 		throw error;

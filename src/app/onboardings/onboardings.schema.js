@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { pgTable, varchar, text, timestamp } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm/sql';
+import { sql } from 'drizzle-orm';
+import { check, pgTable, timestamp, varchar } from 'drizzle-orm/pg-core';
 
 const orgEmailSchema = z
 	.string()
@@ -23,9 +23,14 @@ export const loginSchema = z.object({
 export const users = pgTable('users', {
 	id: varchar('id').primaryKey().default(sql`gen_random_uuid()`),
 	name: varchar('name', { length: 255 }).notNull(),
-	email: varchar('email', { length: 255 }).notNull(),
+	email: varchar('email', { length: 255 }).notNull().unique(),
 	password: varchar('password', { length: 255 }).notNull(),
 	role: varchar('role', { length: 10 }).notNull().default('EMP'),
 	created_at: timestamp('created_at').defaultNow(),
-});
+}, (table) => ({
+	roleCheck: check(
+		'users_role_check',
+		sql`${table.role} IN ('EMP', 'RM', 'APE', 'CFO')`
+	),
+}));
 

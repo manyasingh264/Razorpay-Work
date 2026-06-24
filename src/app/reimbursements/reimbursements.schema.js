@@ -1,6 +1,7 @@
 import { z } from 'zod';
-import { pgTable, varchar, text, timestamp, numeric } from 'drizzle-orm/pg-core';
-import { sql } from 'drizzle-orm/sql';
+import { sql } from 'drizzle-orm';
+import { check, pgTable, timestamp, varchar, text, numeric } from 'drizzle-orm/pg-core';
+import { users } from '../onboardings/onboardings.schema.js';
 
 export const createReimbursementSchema = z.object({
 	title: z.string().min(1, 'Title is required'),
@@ -19,6 +20,13 @@ export const reimbursements = pgTable('reimbursements', {
 	description: text('description').notNull(),
 	amount: numeric('amount').notNull(),
 	status: varchar('status', { length: 32 }).notNull().default('PENDING'),
-	created_by: varchar('created_by', { length: 255 }).notNull(),
+	created_by: varchar('created_by', { length: 255 })
+		.notNull()
+		.references(() => users.id, { onDelete: 'cascade' }),
 	created_at: timestamp('created_at').defaultNow(),
-});
+}, (table) => ({
+	statusCheck: check(
+		'reimbursements_status_check',
+		sql`${table.status} IN ('PENDING', 'RM_APPROVED', 'APPROVED', 'REJECTED')`
+	),
+}));

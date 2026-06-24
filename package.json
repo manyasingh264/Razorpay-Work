@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
+  "engines": {
+    "node": ">=20.10.2"
+  },
   "scripts": {
     "dev": "node src/server.js",
     "db:generate": "drizzle-kit generate",

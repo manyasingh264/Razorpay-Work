@@ -6,7 +6,10 @@ export const getEmployeesController = asyncHandler(async (req, res) => {
 	logger.info('getEmployeesController entry');
 	try {
 		const users = await getEmployees(req.user);
-		res.status(200).json(new ApiSuccessResponse('Employees fetched successfully', { users }));
+		res.status(200).json({
+			status: 'success',
+			data: { users },
+		});
 	} catch (error) {
 		logger.error(`getEmployeesController error: ${error?.message || error}`);
 		throw error;

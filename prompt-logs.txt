@@ -1,0 +1,137 @@
+─────────────────────────────
+PROMPT #1
+COMMIT: first commit
+DATE: 2026-06-24
+─────────────────────────────
+Act as a senior software engineer. Create an Express.js application using JavaScript (no TypeScript) for a reimbursements management tool with role-based access control.
+
+Make sure to follow these requirements:
+
+1. Keep separate modules. We will have these modules:
+   - onboardings   (register, login, logout)
+   - roles         (assign role)
+   - employees     (list, assign to RM, unassign from RM)
+   - reimbursements (create, update status, list, list by userId)
+
+2. Inside every module follow this structure:
+   src/app/<module-name>/
+       <module-name>.routes.js
+       <module-name>.controller.js
+       <module-name>.service.js
+       <module-name>.schema.js
+
+3. Inside the src folder, have these folders:
+       app
+       constants
+       middlewares
+       utils
+       config
+       logger
+   And add these files:
+       app.js
+       server.js
+
+4. Use functional programming for writing code.
+   You can use classes only for specific use cases like creating error classes or logger classes.
+
+5. Use winston logger for logging. Use this logger utility everywhere to log entry/exit to controllers, services. Also log exceptions and errors. Never use console.log directly.
+
+6. Create response classes called ApiSuccessResponse and ApiErrorResponse, keep them in utils.
+
+7. Create custom error classes and throw them at required places. Keep them in utils.
+
+8. Error handling will be done in error handling middleware in Express.
+
+9. Create a custom utility asyncHandler to ease the error handling flow.
+
+10. Use zod for request validation (DTOs). This is JavaScript, so no TypeScript types — just use zod schemas directly.
+
+11. Use drizzle ORM with drizzle-kit for migrations.
+    Tables to create: users, employee_assignments, reimbursements, approvals with the specified columns and defaults.
+
+12. env will be extracted in config/env.config.js with PORT=7002, DATABASE_URL, JWT_SECRET, BCRYPT_SALT_ROUNDS.
+
+13. Keep constants in src/constants for roles, status, and approval types.
+
+14. Create validate, error, and auth middlewares.
+
+15. Do not keep separate .env per environment.
+
+16. app.js registers middlewares, routes, and health check; server.js loads env, connects DB, creates app, and starts server on PORT 7002.
+
+17. Setup database connection with PostgreSQL via Supabase using drizzle ORM in config/db.config.js.
+
+18. API response conventions.
+
+19. Setup cors, helmet, express.json, cookie-parser, and morgan in app.js.
+
+20. Health check API at GET /health.
+
+21. All routes must be prefixed with /rest as per spec.
+
+22. package.json scripts: dev, db:migrate, db:seed-data.
+
+23. At this stage ONLY create the folder structure with empty files.
+
+─────────────────────────────
+PROMPT #2
+COMMIT: Folder structure verified. Ready to implement code.
+DATE: 2026-06-24
+─────────────────────────────
+Where are the dependencies
+
+─────────────────────────────
+PROMPT #3
+COMMIT: Folder structure verified. Ready to implement code.
+DATE: 2026-06-24
+─────────────────────────────
+Create .env, .env.exmple and .gitignore file
+
+─────────────────────────────
+PROMPT #4
+COMMIT: Folder structure verified. Ready to implement code.
+DATE: 2026-06-24
+─────────────────────────────
+give the db:generate command in package.json
+
+─────────────────────────────
+PROMPT #5
+COMMIT: Folder structure verified. Ready to implement code.
+DATE: 2026-06-24
+─────────────────────────────
+fix the .env files not found in files implement dotenv importing it Nd after dotenv.config(/path) use process.env everywhere
+
+─────────────────────────────
+PROMPT #6
+COMMIT: chore: setup project boilerplate
+DATE: 2026-06-24
+─────────────────────────────
+Continue as a senior software engineer on the same project.
+
+Boilerplate is done. Now implement the Authentication module completely — this is the onboardings module.
+
+Implement in this exact order: Zod schemas, service, controller, routes, and mount in app.js.
+
+Use drizzle ORM, functional programming, logger, asyncHandler, AppError, cookie auth, and commit it as a single clean commit: "feat: implement authentication module".
+
+─────────────────────────────
+PROMPT #7
+COMMIT: feat: implement authentication module
+DATE: 2026-06-24
+─────────────────────────────
+Continue as a senior software engineer on the same project.
+
+Roles and Employees modules are done. Now implement the Roles module and Employees module completely.
+
+Implement roles schema/service/controller/routes first, then employees schema/service/controller/routes, with exact route paths, access rules, cleanup rules, logging, and a single clean commit: "feat: implement roles and employees module".
+
+─────────────────────────────
+PROMPT #8
+COMMIT: feat: implement roles and employees module
+DATE: 2026-06-24
+─────────────────────────────
+Continue as a senior software engineer on the same project.
+
+All modules are implemented. This is the final cleanup, verification, and submission preparation step.
+
+Do a complete audit of the entire project and fix anything that does not match the requirements exactly, including route audit, body audit, response shape audit, package.json audit, security audit, database audit, error handling audit, logger audit, environment audit, repository structure audit, prompt-logs.txt, and commit history audit.

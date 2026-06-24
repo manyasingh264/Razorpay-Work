@@ -6,7 +6,8 @@ import { pool } from './config/db.config.js';
 const start = async () => {
 	// ensure DB connection
 	try {
-		await pool.connect();
+		const client = await pool.connect();
+		client.release();
 		logger.info('Database connection successful');
 	} catch (err) {
 		logger.error(`Database connection failed: ${err?.message || err}`);
@@ -15,7 +16,7 @@ const start = async () => {
 
 	const app = createApp();
 
-	const PORT = Number(process.env.PORT) || 7002; // hard requirement to start on 7002
+	const PORT = 7002;
 	app.listen(PORT, () => {
 		logger.info(`Server listening on port ${PORT}`);
 	});
