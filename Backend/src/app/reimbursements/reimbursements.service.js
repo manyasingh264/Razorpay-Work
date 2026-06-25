@@ -31,6 +31,7 @@ const normalizePublicReimbursement = (record, requesterRole) => {
 	if (!record) return null;
 	const status = requesterRole === 'EMP' && record.status === 'RM_APPROVED' ? 'PENDING' : record.status;
 	return {
+		id: record.id,
 		title: record.title,
 		description: record.description,
 		amount: sanitizeAmount(record.amount),
